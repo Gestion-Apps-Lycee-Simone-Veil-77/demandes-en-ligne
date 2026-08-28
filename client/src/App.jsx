@@ -15,7 +15,7 @@ import { Logo, Topbar } from './components/Layout.jsx';
 function LoginScreen() {
   const { renderButton } = useAuth();
   const ref = useRef(null);
-  useEffect(() => { renderButton(ref.current); }, [renderButton]);
+  useEffect(() => renderButton(ref.current), [renderButton]);
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-primary-50 to-slate-100 px-4">
       <div className="card flex w-full max-w-sm flex-col items-center text-center">

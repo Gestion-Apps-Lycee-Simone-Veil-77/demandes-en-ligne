@@ -60,7 +60,7 @@ function ConnectedTopbar({ idToken, signOut }) {
 
 function PublicHeader({ renderButton }) {
   const ref = useRef(null);
-  useEffect(() => { renderButton(ref.current); }, [renderButton]);
+  useEffect(() => renderButton(ref.current), [renderButton]);
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/85 backdrop-blur">
       <div className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-3 px-3 py-2.5 sm:px-6">
