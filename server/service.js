@@ -16,7 +16,7 @@ import { config } from './config.js';
 import {
   TYPES, TYPE_REMBOURSEMENT_OPTIONS, STATUT_PRONOTE_OPTIONS, VALIDATION_TIERS,
   STATUT_ATTENTE, STATUT_VALIDEE, STATUT_REFUSEE, STATUT_PRECISION,
-  MAX_FILE_MB
+  MAX_FILE_MB, PASS_CULTURE_ADAGE_OPTIONS, COURS_BANALISABLES
 } from './constants.js';
 
 // ---------- Identité / annuaire ----------
@@ -332,12 +332,26 @@ export async function submitSortie(email, appUrl, payload) {
     heureDepart: 'Heure de départ', heureRetour: 'Heure de retour',
     lieuDepart: 'Lieu de départ', lieuRetour: 'Lieu de retour',
     classeGroupe: 'Classe / groupe', nombreEleves: "Nombre d'élèves",
-    coursAvant: 'Cours avant la sortie', coursApres: 'Cours après la sortie'
+    coursAvant: 'Cours avant la sortie', coursApres: 'Cours après la sortie',
+    passCultureAdage: 'Pass Culture / Adage'
   };
   requireFields(payload, requis);
+  if (!PASS_CULTURE_ADAGE_OPTIONS.includes(payload.passCultureAdage)) {
+    badRequest('Réponse invalide pour "Pass Culture / Adage".');
+  }
 
+  // Chaque accompagnateur a ses propres cours a banaliser (deux
+  // accompagnateurs peuvent avoir des creneaux differents) -- payload.accompagnateurs
+  // est donc un tableau de { nom, coursBanalises }, pas juste des noms.
+  const codesBanalisables = COURS_BANALISABLES.map(c => c.code);
   const accompagnateurs = Array.isArray(payload.accompagnateurs)
-    ? payload.accompagnateurs.map(a => String(a).trim()).filter(Boolean) : [];
+    ? payload.accompagnateurs
+        .map(a => ({
+          nom: String(a?.nom ?? '').trim(),
+          coursBanalises: Array.isArray(a?.coursBanalises) ? a.coursBanalises.filter(c => codesBanalisables.includes(c)) : []
+        }))
+        .filter(a => a.nom)
+    : [];
   if (!accompagnateurs.length) badRequest('Merci de renseigner au moins un accompagnateur.');
 
   const nbBillet = parseInt(payload.nbBilletEntreeAccompagnateurs, 10) || 0;
@@ -384,6 +398,7 @@ export async function submitSortie(email, appUrl, payload) {
       CoursAvant: String(payload.coursAvant).trim(),
       CoursApres: String(payload.coursApres).trim(),
       AutreTransportCout: payload.autreTransportCout ? parseFloat(String(payload.autreTransportCout).replace(',', '.')) : 0,
+      PassCultureAdage: payload.passCultureAdage,
       PdfUrl: ''
     };
     await appendObjectRow('Demandes_Sortie', await getHeaders('Demandes_Sortie'), row);

@@ -25,6 +25,24 @@ export const STATUT_COULEURS = {
 
 export const TYPE_REMBOURSEMENT_OPTIONS = ['Achat matériel', 'Achat numérique', 'Formation', 'Prestation/service', 'Sortie', 'Voyage', 'Autre'];
 export const STATUT_PRONOTE_OPTIONS = ['Déjà saisie dans Pronote', 'À saisir dans Pronote'];
+export const PASS_CULTURE_ADAGE_OPTIONS = ['Oui', 'Non', 'Je ne sais pas encore'];
+
+// Creneaux horaires de l'etablissement, pour les cours a banaliser d'une
+// sortie (voir FormSortie.jsx / sortiePdf.js). Le code (ex: "M1") est ce qui
+// est stocke dans la feuille (colonne CoursBanalises, liste separee par
+// virgules) ; l'horaire n'est que du texte d'affichage.
+export const COURS_BANALISABLES = [
+  { code: 'M1', horaire: '8h-9h' },
+  { code: 'M2', horaire: '9h-10h10' },
+  { code: 'M3', horaire: '10h10-11h10' },
+  { code: 'M4', horaire: '11h10-12h10' },
+  { code: 'M5', horaire: '12h10-13h10' },
+  { code: 'S1', horaire: '13h10-14h10' },
+  { code: 'S2', horaire: '14h10-15h20' },
+  { code: 'S3', horaire: '15h20-16h20' },
+  { code: 'S4', horaire: '16h20-17h20' },
+  { code: 'S5', horaire: '17h20-18h15' }
+];
 
 export const DEPENSE_COLUMNS = [
   'ID', 'NumeroRequest', 'DateSaisie', 'Email', 'Nom', 'Prenom',
@@ -64,7 +82,7 @@ export const SORTIE_COLUMNS = [
   'NbBilletEntreeAccompagnateurs', 'CoutBilletEntreeAccompagnateurs',
   'NbTicketTransportAccompagnateurs', 'CoutTicketTransportAccompagnateurs',
   'ClasseGroupe', 'NombreEleves', 'CoutBilletEntreeEleves', 'CoutTicketTransportEleves',
-  'CoursAvant', 'CoursApres', 'AutreTransportCout',
+  'CoursAvant', 'CoursApres', 'AutreTransportCout', 'PassCultureAdage',
   'Statut', 'PrecisionDejaDemandee', 'CommentaireDirecteur',
   'PrecisionApportee', 'DateDecision', 'TraitePar', 'PdfUrl'
 ];

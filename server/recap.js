@@ -3,6 +3,16 @@
 // { label, value } en texte brut (jamais de HTML) : chaque consommateur
 // (email, JSON renvoyé au client) l'échappe/l'affiche à sa manière.
 import { formatDateFr, formatDateTimeFr, formatHeureFr, formatMontant, safeJsonParse } from './util.js';
+import { COURS_BANALISABLES } from './constants.js';
+
+// ['M1','M3'] -> "M1 (8h-9h), M3 (10h10-11h10)"
+function formatCoursBanalises(codes) {
+  if (!Array.isArray(codes) || !codes.length) return 'aucun';
+  return codes.map(code => {
+    const c = COURS_BANALISABLES.find(c => c.code === code);
+    return c ? `${c.code} (${c.horaire})` : code;
+  }).join(', ');
+}
 
 export function buildRecapDepense(row) {
   return [
@@ -82,7 +92,12 @@ export function buildRecapSortie(row) {
     { label: 'Heure de retour', value: formatHeureFr(row.HeureRetour) },
     { label: 'Lieu de départ', value: row.LieuDepart },
     { label: 'Lieu de retour', value: row.LieuRetour },
-    { label: 'Accompagnateurs', value: accompagnateurs.length ? accompagnateurs.join(', ') : '—' },
+    {
+      label: 'Accompagnateurs (cours à banaliser)',
+      value: accompagnateurs.length
+        ? accompagnateurs.map(a => `${a.nom} — ${formatCoursBanalises(a.coursBanalises)}`).join(' ; ')
+        : '—'
+    },
     { label: "Billets d'entrée accompagnateurs — nombre", value: row.NbBilletEntreeAccompagnateurs },
     { label: "Billets d'entrée accompagnateurs — coût individuel", value: row.CoutBilletEntreeAccompagnateurs ? `${formatMontant(row.CoutBilletEntreeAccompagnateurs)} €` : '—' },
     { label: 'Tickets de transport accompagnateurs — nombre', value: row.NbTicketTransportAccompagnateurs },
@@ -93,7 +108,8 @@ export function buildRecapSortie(row) {
     { label: 'Élèves — coût individuel ticket de transport', value: row.CoutTicketTransportEleves ? `${formatMontant(row.CoutTicketTransportEleves)} €` : '—' },
     { label: 'Cours maintenu avant la sortie ?', value: row.CoursAvant },
     { label: 'Cours maintenu après la sortie ?', value: row.CoursApres },
-    { label: 'Coût individuel autre moyen de transport', value: row.AutreTransportCout ? `${formatMontant(row.AutreTransportCout)} €` : '—' }
+    { label: 'Coût individuel autre moyen de transport', value: row.AutreTransportCout ? `${formatMontant(row.AutreTransportCout)} €` : '—' },
+    { label: 'Pass Culture / Adage', value: row.PassCultureAdage }
   ];
 }
 
