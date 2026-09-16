@@ -279,9 +279,9 @@ export async function submitSalle(appUrl, payload) {
   const requis = {
     demandeurNom: 'Nom', demandeurPrenom: 'Prénom', demandeurEmail: 'Email',
     demandeurTelephone: 'Numéro de téléphone', demandeurActivite: 'Activité / fonction',
-    intituleFormation: 'Intitulé de la formation', referentNom: 'Nom du référent',
-    referentTelephone: 'Téléphone du référent', referentEmail: 'Email du référent',
-    horaires: 'Horaires', nombreParticipants: 'Nombre de participants', formateurs: 'Formateur(s)'
+    intituleFormation: 'Intitulé de la formation', referentNom: 'Nom du référent.e',
+    referentTelephone: 'Téléphone du référent.e', referentEmail: 'Email du référent.e',
+    horaires: 'Horaires', nombreParticipants: 'Nombre de participants', formateurs: 'Formateur.ices'
   };
   requireFields(payload, requis);
 
@@ -327,7 +327,7 @@ export async function submitSortie(email, appUrl, payload) {
   const personnel = await requirePersonnel(email);
 
   const requis = {
-    professeurOrganisateur: 'Professeur organisateur', emailOrganisateur: "Email de l'organisateur",
+    professeurOrganisateur: 'Professeur.e organisateur.ices', emailOrganisateur: "Email de l'organisateur.ices",
     nomSortie: 'Nom de la sortie', lieuSortie: 'Lieu de la sortie', dateSortie: 'Date de la sortie',
     heureDepart: 'Heure de départ', heureRetour: 'Heure de retour',
     lieuDepart: 'Lieu de départ', lieuRetour: 'Lieu de retour',
@@ -340,9 +340,10 @@ export async function submitSortie(email, appUrl, payload) {
     badRequest('Réponse invalide pour "Pass Culture / Adage".');
   }
 
-  // Chaque accompagnateur a ses propres cours a banaliser (deux
-  // accompagnateurs peuvent avoir des creneaux differents) -- payload.accompagnateurs
+  // Chaque accompagnateur.ice a ses propres cours a banaliser (deux
+  // accompagnateur.ices peuvent avoir des creneaux differents) -- payload.accompagnateurs
   // est donc un tableau de { nom, coursBanalises }, pas juste des noms.
+  // Le/la professeur.e organisateur.ices a aussi les siens, a part.
   const codesBanalisables = COURS_BANALISABLES.map(c => c.code);
   const accompagnateurs = Array.isArray(payload.accompagnateurs)
     ? payload.accompagnateurs
@@ -352,7 +353,9 @@ export async function submitSortie(email, appUrl, payload) {
         }))
         .filter(a => a.nom)
     : [];
-  if (!accompagnateurs.length) badRequest('Merci de renseigner au moins un accompagnateur.');
+  if (!accompagnateurs.length) badRequest('Merci de renseigner au moins un accompagnateur.ice.');
+  const organisateurCoursBanalises = Array.isArray(payload.organisateurCoursBanalises)
+    ? payload.organisateurCoursBanalises.filter(c => codesBanalisables.includes(c)) : [];
 
   const nbBillet = parseInt(payload.nbBilletEntreeAccompagnateurs, 10) || 0;
   const nbTicket = parseInt(payload.nbTicketTransportAccompagnateurs, 10) || 0;
@@ -379,6 +382,7 @@ export async function submitSortie(email, appUrl, payload) {
       ...creerLigneBase(email, personnel, numero),
       ProfesseurOrganisateur: String(payload.professeurOrganisateur).trim(),
       EmailOrganisateur: String(payload.emailOrganisateur).trim(),
+      OrganisateurCoursBanalises: organisateurCoursBanalises.join(','),
       NomSortie: String(payload.nomSortie).trim(),
       LieuSortie: String(payload.lieuSortie).trim(),
       DateSortie: payload.dateSortie,
@@ -413,8 +417,8 @@ export async function submitIntervenant(email, appUrl, payload) {
   const personnel = await requirePersonnel(email);
 
   const requis = {
-    intervenantNom: "Nom de l'intervenant", intervenantEmail: "Email de l'intervenant",
-    intervenantTelephone: "Téléphone de l'intervenant", intervenantActivite: "Activité / fonction de l'intervenant",
+    intervenantNom: "Nom de l'intervenant.e", intervenantEmail: "Email de l'intervenant.e",
+    intervenantTelephone: "Téléphone de l'intervenant.e", intervenantActivite: "Activité / fonction de l'intervenant.e",
     intervenantStructure: "Structure / entreprise / association", coutIntervention: "Coût de l'intervention",
     objectifs: "Objectifs de l'intervention"
   };

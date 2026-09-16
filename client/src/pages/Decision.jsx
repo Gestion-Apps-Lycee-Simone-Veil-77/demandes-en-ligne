@@ -66,7 +66,7 @@ export default function Decision() {
 
       {data.precisionApportee && (
         <>
-          <h2 className="section-title">Précisions apportées par le demandeur</h2>
+          <h2 className="section-title">Précisions apportées par le demandeur.euse</h2>
           <p className="mb-4 whitespace-pre-wrap rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm">{data.precisionApportee}</p>
         </>
       )}
@@ -86,7 +86,7 @@ export default function Decision() {
       {!data.peutTraiter ? (
         <p className="mt-5 text-sm text-slate-500">
           {data.statut === 'Précision demandée'
-            ? "Cette demande est en attente des précisions du demandeur. Vous pourrez la traiter dès qu'il aura répondu."
+            ? "Cette demande est en attente des précisions du demandeur.euse. Vous pourrez la traiter dès qu'il/elle aura répondu."
             : "Cette demande a déjà été traitée, aucune action supplémentaire n'est possible."}
         </p>
       ) : (

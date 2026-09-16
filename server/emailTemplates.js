@@ -111,7 +111,7 @@ export async function sendPrecisionApportee(type, row, appUrl, directeurEmail) {
   const cfg = TYPES[type];
   const table = recapTableHtml(type, row);
   const numero = row.NumeroRequest;
-  const precision = `<p>Précisions apportées par le demandeur :</p><p style="padding:10px;background:#f0f4ff;border-radius:6px;">${escapeHtml(row.PrecisionApportee)}</p>`;
+  const precision = `<p>Précisions apportées par le demandeur.euse :</p><p style="padding:10px;background:#f0f4ff;border-radius:6px;">${escapeHtml(row.PrecisionApportee)}</p>`;
 
   await sendEmail({
     to: row.Email, subject: `${cfg.libelleCap} ${numero} — Précisions transmises`,
@@ -120,7 +120,7 @@ export async function sendPrecisionApportee(type, row, appUrl, directeurEmail) {
   });
 
   const directeurUrl = `${appUrl}/decision/${type}/${row.ID}`;
-  const directeurInner = `<p>Le demandeur a apporté les précisions demandées concernant la ${cfg.libelle} <strong>${escapeHtml(numero)}</strong>.</p>${precision}${table}${actionButtonHtml('Traiter la demande', directeurUrl, '#1a73e8')}`;
+  const directeurInner = `<p>Le demandeur.euse a apporté les précisions demandées concernant la ${cfg.libelle} <strong>${escapeHtml(numero)}</strong>.</p>${precision}${table}${actionButtonHtml('Traiter la demande', directeurUrl, '#1a73e8')}`;
   await sendEmail({
     to: directeurEmail, subject: `${cfg.libelleCap} ${numero} — Précisions apportées`,
     html: emailShell('Précisions apportées', 'Monsieur le Proviseur', directeurInner, STATUT_COULEURS[STATUT_ATTENTE]),

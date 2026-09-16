@@ -57,7 +57,7 @@ export default function FormIntervenant() {
 
   return (
     <Layout back="/">
-      <h2 className="page-title">Accueil d'intervenant extérieur</h2>
+      <h2 className="page-title">Accueil d'intervenant.e extérieur.e</h2>
       <p className="mb-4 text-sm leading-relaxed text-slate-500">
         Ce formulaire permet de déclarer l'intervention d'une personne extérieure à l'établissement.<br />
         Votre demande sera examinée par le proviseur avant validation.
@@ -97,21 +97,21 @@ export default function FormIntervenant() {
             </button>
           </div>
 
-          <Field label="Nom Prénom de l'intervenant" required>
+          <Field label="Nom Prénom de l'intervenant.e" required>
             <input className={inputClass} required value={f.intervenantNom} onChange={set('intervenantNom')} />
           </Field>
           <div className="flex gap-2">
-            <div className="flex-1"><Field label="Adresse mail de l'intervenant" required hint="Extérieur à l'établissement.">
+            <div className="flex-1"><Field label="Adresse mail de l'intervenant.e" required hint="Extérieur à l'établissement.">
               <input className={inputClass} required value={f.intervenantEmail} onChange={set('intervenantEmail')} />
             </Field></div>
-            <div className="flex-1"><Field label="Numéro de téléphone de l'intervenant" required>
+            <div className="flex-1"><Field label="Numéro de téléphone de l'intervenant.e" required>
               <input className={inputClass} required value={f.intervenantTelephone} onChange={set('intervenantTelephone')} />
             </Field></div>
           </div>
-          <Field label="Activité / fonction de l'intervenant" required>
+          <Field label="Activité / fonction de l'intervenant.e" required>
             <input className={inputClass} required value={f.intervenantActivite} onChange={set('intervenantActivite')} />
           </Field>
-          <Field label="Structure / entreprise / association de l'intervenant" required>
+          <Field label="Structure / entreprise / association de l'intervenant.e" required>
             <input className={inputClass} required value={f.intervenantStructure} onChange={set('intervenantStructure')} />
           </Field>
           <Field label="Coût de l'intervention" required hint="En euros — la virgule est acceptée, indiquez 0 si gratuit.">

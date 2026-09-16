@@ -77,7 +77,7 @@ export const SALLE_COLUMNS = [
 
 export const SORTIE_COLUMNS = [
   'ID', 'NumeroRequest', 'DateSaisie', 'Email', 'Nom', 'Prenom',
-  'ProfesseurOrganisateur', 'EmailOrganisateur', 'NomSortie', 'LieuSortie', 'DateSortie',
+  'ProfesseurOrganisateur', 'EmailOrganisateur', 'OrganisateurCoursBanalises', 'NomSortie', 'LieuSortie', 'DateSortie',
   'HeureDepart', 'HeureRetour', 'LieuDepart', 'LieuRetour', 'AccompagnateursJSON',
   'NbBilletEntreeAccompagnateurs', 'CoutBilletEntreeAccompagnateurs',
   'NbTicketTransportAccompagnateurs', 'CoutTicketTransportAccompagnateurs',
@@ -134,8 +134,8 @@ export const TYPES = {
   INTERVENANT: {
     prefix: 'INTERV',
     sheet: 'Demandes_Intervenant',
-    libelle: "demande d'accueil d'intervenant extérieur",
-    libelleCap: "Accueil d'intervenant extérieur",
+    libelle: "demande d'accueil d'intervenant.e extérieur.e",
+    libelleCap: "Accueil d'intervenant.e extérieur.e",
     columns: INTERVENANT_COLUMNS
   }
 };

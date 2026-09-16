@@ -93,18 +93,18 @@ export default function FormSalle() {
           <input className={inputClass} required value={f.intituleFormation} onChange={set('intituleFormation')} />
         </Field>
 
-        <Field label="Nom du référent de la formation" required>
+        <Field label="Nom du référent.e de la formation" required>
           <input className={inputClass} required value={f.referentNom} onChange={set('referentNom')} />
         </Field>
 
         <div className="flex gap-2">
           <div className="flex-1">
-            <Field label="Téléphone du référent" required>
+            <Field label="Téléphone du référent.e" required>
               <input className={inputClass} required value={f.referentTelephone} onChange={set('referentTelephone')} />
             </Field>
           </div>
           <div className="flex-1">
-            <Field label="Email du référent" required>
+            <Field label="Email du référent.e" required>
               <input className={inputClass} required value={f.referentEmail} onChange={set('referentEmail')} />
             </Field>
           </div>
