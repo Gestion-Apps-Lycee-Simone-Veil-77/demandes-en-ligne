@@ -9,7 +9,7 @@ const ITEMS = [
   { to: '/remboursement', icon: '🧾', badge: 'bg-violet-50', label: "Remboursement d'avance de frais", desc: 'Vous avez avancé personnellement une dépense pour le lycée', public: false },
   { to: '/salle', icon: '🏫', badge: 'bg-sky-50', label: 'Réservation de salle pour formation', desc: "Organiser une formation dans l'établissement (accessible sans connexion)", public: true },
   { to: '/sortie', icon: '🚌', badge: 'bg-amber-50', label: 'Sortie pédagogique', desc: 'Déclarer une sortie ou un voyage scolaire', public: false },
-  { to: '/intervenant', icon: '🎤', badge: 'bg-emerald-50', label: "Accueil d'intervenant.e extérieur.e", desc: "Déclarer l'intervention d'une personne extérieure", public: false }
+  { to: '/intervenant', icon: '🎤', badge: 'bg-emerald-50', label: "Accueil d'intervenant extérieur", desc: "Déclarer l'intervention d'une personne extérieure", public: false }
 ];
 
 // Page d'accueil : accessible sans connexion (pour que les personnes

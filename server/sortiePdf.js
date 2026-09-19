@@ -21,8 +21,8 @@ export function buildSortiePdfHtml(row, logoDataUri) {
     `<tr><td class="cle">${escapeHtml(label)}</td><td class="val">${escapeHtml(value === undefined || value === null || value === '' ? '-' : value)}</td></tr>`;
 
   const accompagnateursRows = accompagnateurs.length
-    ? accompagnateurs.map((a, i) => ligne('Accompagnateur.ice ' + (i + 1), `${a.nom} - Cours a banaliser : ${formatCoursBanalises(a.coursBanalises)}`)).join('')
-    : ligne('Accompagnateur.ices', '-');
+    ? accompagnateurs.map((a, i) => ligne('Accompagnateur ' + (i + 1), `${a.nom} - Cours a banaliser : ${formatCoursBanalises(a.coursBanalises)}`)).join('')
+    : ligne('Accompagnateurs', '-');
 
   const organisateurCoursBanalises = String(row.OrganisateurCoursBanalises || '').split(',').filter(Boolean);
 
@@ -79,10 +79,10 @@ export function buildSortiePdfHtml(row, logoDataUri) {
       <div class="date">${escapeHtml(formatDateFr(row.DateSortie))} — ${escapeHtml(row.LieuSortie)}</div>
     </div>
 
-    <h2 class="section section-bleu">Organisateur.ices</h2>
+    <h2 class="section section-bleu">Organisateur</h2>
     <table>
-      ${ligne("Professeur.e organisateur.ices", row.ProfesseurOrganisateur)}
-      ${ligne("Email de l'organisateur.ices", row.EmailOrganisateur)}
+      ${ligne("Professeur organisateur", row.ProfesseurOrganisateur)}
+      ${ligne("Email de l'organisateur", row.EmailOrganisateur)}
     </table>
 
     <p class="valide">Votre demande de sortie est validee.</p>
@@ -136,12 +136,12 @@ export function buildSortiePdfHtml(row, logoDataUri) {
       ${ligne('Pass Culture / Adage', row.PassCultureAdage)}
     </table>
 
-    <h2 class="section section-bleu">Organisateur.ices - ${escapeHtml(row.ProfesseurOrganisateur)}</h2>
+    <h2 class="section section-bleu">Organisateur - ${escapeHtml(row.ProfesseurOrganisateur)}</h2>
     <table>
       ${ligne('Cours a banaliser', formatCoursBanalises(organisateurCoursBanalises))}
     </table>
 
-    <h2 class="section section-bleufonce">Accompagnateur.ices</h2>
+    <h2 class="section section-bleufonce">Accompagnateurs</h2>
     <table>
       ${accompagnateursRows}
       ${ligne("Billets d'entree - nombre", row.NbBilletEntreeAccompagnateurs)}

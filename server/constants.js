@@ -134,8 +134,8 @@ export const TYPES = {
   INTERVENANT: {
     prefix: 'INTERV',
     sheet: 'Demandes_Intervenant',
-    libelle: "demande d'accueil d'intervenant.e extérieur.e",
-    libelleCap: "Accueil d'intervenant.e extérieur.e",
+    libelle: "demande d'accueil d'intervenant extérieur",
+    libelleCap: "Accueil d'intervenant extérieur",
     columns: INTERVENANT_COLUMNS
   }
 };

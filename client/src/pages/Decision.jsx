@@ -8,9 +8,9 @@ import { useShell } from '../App.jsx';
 const STATUT_PRONOTE_OPTIONS = ['Déjà saisie dans Pronote', 'À saisir dans Pronote'];
 
 const ACTIONS = {
-  accepter: { label: 'Accepter la demande', classe: 'btn-success', besoinCommentaire: false, confirmText: "Confirmer l'acceptation de cette demande ?" },
-  refuser: { label: 'Refuser la demande', classe: 'btn-danger', besoinCommentaire: true, confirmText: 'Confirmer le refus de cette demande ?' },
-  preciser: { label: 'Demander des précisions', classe: 'btn-warning', besoinCommentaire: true, confirmText: "Confirmer l'envoi de cette demande de précisions ?" }
+  accepter: { label: 'Accepter la demande', classe: 'btn-success', besoinCommentaire: false },
+  refuser: { label: 'Refuser la demande', classe: 'btn-danger', besoinCommentaire: true },
+  preciser: { label: 'Demander des précisions', classe: 'btn-warning', besoinCommentaire: true }
 };
 
 export default function Decision() {
@@ -41,7 +41,6 @@ export default function Decision() {
     const cfg = ACTIONS[action];
     if (cfg.besoinCommentaire && !commentaire.trim()) { setStatus({ type: 'error', text: 'Merci de renseigner un commentaire.' }); return; }
     if (type === 'SALLE' && action === 'accepter' && !statutPronote) { setStatus({ type: 'error', text: 'Merci de choisir le statut Pronote.' }); return; }
-    if (!window.confirm(cfg.confirmText)) return;
 
     setBusy(true);
     setStatus({ type: 'loading', text: 'Envoi en cours...' });
@@ -66,7 +65,7 @@ export default function Decision() {
 
       {data.precisionApportee && (
         <>
-          <h2 className="section-title">Précisions apportées par le demandeur.euse</h2>
+          <h2 className="section-title">Précisions apportées par le demandeur</h2>
           <p className="mb-4 whitespace-pre-wrap rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm">{data.precisionApportee}</p>
         </>
       )}
@@ -86,7 +85,7 @@ export default function Decision() {
       {!data.peutTraiter ? (
         <p className="mt-5 text-sm text-slate-500">
           {data.statut === 'Précision demandée'
-            ? "Cette demande est en attente des précisions du demandeur.euse. Vous pourrez la traiter dès qu'il/elle aura répondu."
+            ? "Cette demande est en attente des précisions du demandeur. Vous pourrez la traiter dès qu'il aura répondu."
             : "Cette demande a déjà été traitée, aucune action supplémentaire n'est possible."}
         </p>
       ) : (

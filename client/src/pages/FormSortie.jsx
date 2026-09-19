@@ -74,7 +74,7 @@ export default function FormSortie() {
     const cleanAccompagnateurs = accompagnateurs
       .map(a => ({ nom: a.nom.trim(), coursBanalises: a.coursBanalises }))
       .filter(a => a.nom);
-    if (!cleanAccompagnateurs.length) { setStatus({ type: 'error', text: 'Merci de renseigner au moins un accompagnateur.ice.' }); return; }
+    if (!cleanAccompagnateurs.length) { setStatus({ type: 'error', text: 'Merci de renseigner au moins un accompagnateur.' }); return; }
     if (nbBillet > 0 && !f.coutBilletEntreeAccompagnateurs.trim()) {
       setStatus({ type: 'error', text: "Merci de préciser le coût individuel du billet d'entrée." }); return;
     }
@@ -121,15 +121,15 @@ export default function FormSortie() {
 
       {bootstrap && (
         <form onSubmit={handleSubmit}>
-          <Field label="Professeur.e organisateur.ices" required>
+          <Field label="Professeur organisateur" required>
             <input className={inputClass} required value={f.professeurOrganisateur} onChange={set('professeurOrganisateur')} />
           </Field>
-          <Field label="Adresse email de l'organisateur.ices" required>
+          <Field label="Adresse email de l'organisateur" required>
             <input className={inputClass} required value={f.emailOrganisateur} onChange={set('emailOrganisateur')} />
           </Field>
 
           <div className="mb-4">
-            <span className="label">Cours à banaliser pour l'organisateur.ices</span>
+            <span className="label">Cours à banaliser pour l'organisateur</span>
             <div className="grid grid-cols-2 gap-x-3">
               <div className="flex flex-col gap-1">
                 {COURS_MATIN.map(c => (
@@ -172,14 +172,14 @@ export default function FormSortie() {
           </div>
 
           <div className="mb-4">
-            <span className="label">Accompagnateur.ices <span className="text-red-500">*</span></span>
-            <span className="mb-1.5 block text-xs text-slate-400">Chaque accompagnateur.ice peut avoir ses propres cours à banaliser.</span>
+            <span className="label">Accompagnateurs <span className="text-red-500">*</span></span>
+            <span className="mb-1.5 block text-xs text-slate-400">Chaque accompagnateur peut avoir ses propres cours à banaliser.</span>
             <div className="flex flex-col gap-2.5">
               {accompagnateurs.map((a, i) => (
                 <div key={i} className="rounded-xl border border-slate-200 p-3">
                   <div className="mb-2.5 flex items-end gap-2">
                     <div className="flex-1">
-                      <span className="mb-1 block text-xs text-slate-400">Nom de l'accompagnateur.ice {i + 1}</span>
+                      <span className="mb-1 block text-xs text-slate-400">Nom de l'accompagnateur {i + 1}</span>
                       <input className={inputClass} value={a.nom} onChange={e => setAccompagnateurNom(i, e.target.value)} required={i === 0} />
                     </div>
                     {i > 0 && (
@@ -187,7 +187,7 @@ export default function FormSortie() {
                     )}
                   </div>
 
-                  <span className="mb-1 block text-xs text-slate-400">Cours à banaliser pour cet accompagnateur.ice</span>
+                  <span className="mb-1 block text-xs text-slate-400">Cours à banaliser pour cet accompagnateur</span>
                   <div className="grid grid-cols-2 gap-x-3">
                     <div className="flex flex-col gap-1">
                       {COURS_MATIN.map(c => (
@@ -204,12 +204,12 @@ export default function FormSortie() {
               ))}
             </div>
             <button type="button" onClick={addAccompagnateur} className="mt-2 rounded-xl border border-dashed border-primary-300 px-3.5 py-2 text-sm font-semibold text-primary-700 transition hover:bg-primary-50">
-              + Ajouter un accompagnateur.ice
+              + Ajouter un accompagnateur
             </button>
           </div>
 
           <div className="flex gap-2">
-            <div className="flex-1"><Field label="Accompagnateur.ices — nombre de billets d'entrée">
+            <div className="flex-1"><Field label="Accompagnateurs — nombre de billets d'entrée">
               <input type="number" min="0" className={inputClass} value={f.nbBilletEntreeAccompagnateurs} onChange={set('nbBilletEntreeAccompagnateurs')} />
             </Field></div>
             {nbBillet > 0 && (
@@ -220,7 +220,7 @@ export default function FormSortie() {
           </div>
 
           <div className="flex gap-2">
-            <div className="flex-1"><Field label="Accompagnateur.ices — nombre de tickets de transport">
+            <div className="flex-1"><Field label="Accompagnateurs — nombre de tickets de transport">
               <input type="number" min="0" className={inputClass} value={f.nbTicketTransportAccompagnateurs} onChange={set('nbTicketTransportAccompagnateurs')} />
             </Field></div>
             {nbTicket > 0 && (
