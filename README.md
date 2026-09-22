@@ -192,10 +192,13 @@ Réutilisez votre feuille actuelle (celle configurée dans `SPREADSHEET_ID` côt
 3. Renseignez :
    - **Name** : `demandes-depenses`
    - **Region** : Frankfurt
-   - **Build Command** : `npm install && cd client && npm install && npm run build && cd ..`
+   - **Build Command** : `npm install && npx puppeteer browsers install chrome && cd client && npm install && npm run build && cd ..`
    - **Start Command** : `node server/index.js`
    - **Instance Type** : Free pour démarrer (voir note ci-dessous sur Puppeteer)
-4. **Environment Variables** : toutes les variables de votre `.env` racine, **sauf** `GOOGLE_SERVICE_ACCOUNT_KEY_FILE` **et sauf `APP_PUBLIC_URL`** si vous l'aviez ajoutée pour tester en local (étape 9.3) — sur Render, l'URL publique doit être déduite automatiquement de la requête, pas fixée sur `localhost`. Ajoutez aussi `VITE_GOOGLE_OAUTH_CLIENT_ID` (le build du frontend en a besoin).
+
+   > ⚠️ **Le `npx puppeteer browsers install chrome` est indispensable** — sans lui, la génération du PDF de sortie échoue en production avec une erreur `Could not find Chrome`. En résumé : Puppeteer télécharge normalement Chromium tout seul au moment du `npm install`, mais dans l'environnement de build de Render, ce téléchargement automatique ne se déclenche pas de façon fiable — il faut le forcer explicitement avec cette commande. Si vous avez déjà un service Render existant sans cette commande, ajoutez-la dans **Settings** → **Build Command**, puis **Manual Deploy** → **Clear build cache & deploy** (important : un simple redeploy sans vider le cache peut ne pas suffire).
+
+4. **Environment Variables** : toutes les variables de votre `.env` racine, **sauf** `GOOGLE_SERVICE_ACCOUNT_KEY_FILE` **et sauf `APP_PUBLIC_URL`** si vous l'aviez ajoutée pour tester en local (étape 9.3) — sur Render, l'URL publique doit être déduite automatiquement de la requête, pas fixée sur `localhost`. Ajoutez aussi `VITE_GOOGLE_OAUTH_CLIENT_ID` (le build du frontend en a besoin) et `PUPPETEER_CACHE_DIR=/opt/render/.cache/puppeteer` (pour que le téléchargement de l'étape build et sa recherche au démarrage du serveur pointent exactement vers le même dossier).
 5. **Secret Files** (réglages avancés) : fichier `service-account.json`, contenu = tout le JSON local.
 6. Remettez `GOOGLE_SERVICE_ACCOUNT_KEY_FILE=service-account.json` dans les variables d'environnement.
 7. **Create Web Service**. Une URL type `https://demandes-depenses.onrender.com` vous est attribuée.

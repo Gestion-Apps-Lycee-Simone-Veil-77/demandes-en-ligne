@@ -72,8 +72,22 @@ export async function requireDirecteur(email) {
 }
 
 // Roles notifies uniquement quand la demande est validee (voir constants.js).
+//
+// Resilient face a un role non configure dans ConfigDestinataires : avant,
+// un seul role manquant faisait echouer tout le Promise.all, ce qui
+// empechait l'envoi de TOUS les mails de validation (y compris au
+// demandeur et au proviseur, pourtant configures correctement). Desormais
+// on ignore juste le role en defaut (avec un log), les autres destinataires
+// recoivent quand meme leur mail normalement.
 async function destinatairesValidation(type) {
-  return Promise.all((VALIDATION_TIERS[type] || []).map(getDestinataire));
+  const roles = VALIDATION_TIERS[type] || [];
+  const resultats = await Promise.allSettled(roles.map(getDestinataire));
+  const adresses = [];
+  resultats.forEach((r, i) => {
+    if (r.status === 'fulfilled') adresses.push(r.value);
+    else console.error(`Destinataire de validation manquant (${roles[i]}) : ${r.reason?.message || r.reason}`);
+  });
+  return adresses;
 }
 
 // ---------- Configs / bootstrap formulaires ----------
